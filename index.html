@@ -76,7 +76,9 @@
       for (let i = 0; i < str.length; i++) {
 
         //if letter is uppercase then add uppercase letters
-        if (isUpperCase(str[i])) {
+        if (str[i]==" "){
+          decipher += " ";
+        } else if (isUpperCase(str[i])) {
           decipher += String.fromCharCode((str.charCodeAt(i) + key - 65) % 26 + 65);
         } else {
           //else add lowercase letters
@@ -104,7 +106,7 @@
         message_def: {
           get() {
             //this function will determine what is displayed in the input
-            return ceaserCipher(this.message, Math.abs(hashCode(this.password) % 10));
+            return ceaserCipher(this.message, Math.abs(hashCode(this.password) % 1000));
           },
           set(newVal) {
             //this function will run whenever the input changes
