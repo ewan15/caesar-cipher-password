@@ -1,1 +1,118 @@
-hi
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+  <title>Sticky Footer Template for Bootstrap</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="dist/css/flat-ui.css" rel="stylesheet">
+  <link href="docs/assets/css/demo.css" rel="stylesheet">
+</head>
+<style>
+  /* Sticky footer styles
+    -------------------------------------------------- */
+  html {
+    position: relative;
+    min-height: 100%;
+  }
+
+  body {
+    margin-bottom: 60px;
+    /* Margin bottom by footer height */
+  }
+
+
+  /* Custom page CSS
+    -------------------------------------------------- */
+  /* Not required for template or sticky footer method. */
+
+  .container {
+    width: auto;
+    max-width: 680px;
+    padding: 0 15px;
+  }
+</style>
+
+<body style="background-color: #1f1f1f;">
+  <script>
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+  <!-- Begin page content -->
+  <main role="main" class="container" style="
+      background-color: #2e2e2e;
+      border-radius: 25px;">
+    <div id="app" style="text-align: center; padding-bottom: 5%;">
+      <h1 id="app" class="mt-5" style="text-align: center; color: azure; padding-top: 3%;">Secret</h1>
+      <div class="form-group" style="text-align: center;">
+        <label style="padding-top: 5%; color: azure; padding-bottom: 2%;" for="fname">Password</label><br>
+        <input style="width: 33%;margin: 0 auto;" type="text" id="fname" name="fname" v-model="password"
+          class="form-control"><br>
+        <label style="padding-top: 5%; color: azure; padding-bottom: 2%;">Text</label><br>
+        <textarea style="width: 75%;;margin: 0 auto;" v-model="message" placeholder="Text to Decrypt" class="form-control"></textarea><br>
+        <label style="padding-top: 5%; color: azure;">Result</label><br>
+        <textarea style="width: 75%;;margin: 0 auto; margin-top: 3%; color: black;" class="form-control"readonly>{{ message_def }}</textarea>
+        <br style="padding-top: 2%;">
+      </div>
+    </div>
+  </main>
+  <script>
+    function isUpperCase(str) {
+      return str === str.toUpperCase();
+    };
+
+    let ceaserCipher = (str, key) => {
+      let decipher = '';
+
+      //decipher each letter
+      for (let i = 0; i < str.length; i++) {
+
+        //if letter is uppercase then add uppercase letters
+        if (isUpperCase(str[i])) {
+          decipher += String.fromCharCode((str.charCodeAt(i) + key - 65) % 26 + 65);
+        } else {
+          //else add lowercase letters
+          decipher += String.fromCharCode((str.charCodeAt(i) + key - 97) % 26 + 97);
+        }
+      };
+      return decipher;
+    };
+
+    var hashCode = function (s) {
+      var h = 0, l = s.length, i = 0;
+      if (l > 0)
+        while (i < l)
+          h = (h << 5) - h + s.charCodeAt(i++) | 0;
+      return h;
+    };
+
+    var app6 = new Vue({
+      el: '#app',
+      data: {
+        message: '',
+        password: ''
+      },
+      computed: {
+        message_def: {
+          get() {
+            //this function will determine what is displayed in the input
+            return ceaserCipher(this.message, Math.abs(hashCode(this.password) % 10));
+          },
+          set(newVal) {
+            //this function will run whenever the input changes
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
